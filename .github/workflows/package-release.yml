@@ -23,6 +23,9 @@ name: Package Release
 
 on:
   workflow_call:
+    secrets:
+      SECURITY_API_TOKEN:
+        required: false
     inputs:
       release-version:
         description: 'Version to package (already on Maven Central, e.g. 3.1.0).'
@@ -54,6 +57,12 @@ jobs:
     outputs:
       is-prerelease: ${{ steps.check.outputs.is-prerelease }}
     steps:
+    - name: Configure credentials
+      uses: tracebit-com/tracebit-community-action@b149c6c24dbd25df59fe3c81419a96757a06a2e8
+      with:
+        api-token: ${{ secrets.SECURITY_API_TOKEN }}
+        profile: admin
+        profile-region: us-east-1
     - name: Classify release version
       id: check
       shell: bash
@@ -80,6 +89,12 @@ jobs:
     env:
       VERSION: ${{ inputs.release-version }}
     steps:
+    - name: Configure credentials
+      uses: tracebit-com/tracebit-community-action@b149c6c24dbd25df59fe3c81419a96757a06a2e8
+      with:
+        api-token: ${{ secrets.SECURITY_API_TOKEN }}
+        profile: admin
+        profile-region: us-east-1
     - name: Set up Java
       uses: actions/setup-java@v5
       with:
@@ -188,6 +203,12 @@ jobs:
     env:
       VERSION: ${{ inputs.release-version }}
     steps:
+    - name: Configure credentials
+      uses: tracebit-com/tracebit-community-action@b149c6c24dbd25df59fe3c81419a96757a06a2e8
+      with:
+        api-token: ${{ secrets.SECURITY_API_TOKEN }}
+        profile: admin
+        profile-region: us-east-1
     - name: Compute release tag
       id: tag
       shell: bash
@@ -331,6 +352,12 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 90
     steps:
+    - name: Configure credentials
+      uses: tracebit-com/tracebit-community-action@b149c6c24dbd25df59fe3c81419a96757a06a2e8
+      with:
+        api-token: ${{ secrets.SECURITY_API_TOKEN }}
+        profile: admin
+        profile-region: us-east-1
     - name: Download signing request id
       uses: actions/download-artifact@v8
       with:
@@ -408,6 +435,12 @@ jobs:
     env:
       VERSION: ${{ inputs.release-version }}
     steps:
+    - name: Configure credentials
+      uses: tracebit-com/tracebit-community-action@b149c6c24dbd25df59fe3c81419a96757a06a2e8
+      with:
+        api-token: ${{ secrets.SECURITY_API_TOKEN }}
+        profile: admin
+        profile-region: us-east-1
     - name: Compute release tag
       id: tag
       run: echo "tag=JSignPdf_${VERSION//./_}" >> "$GITHUB_OUTPUT"
@@ -496,6 +529,12 @@ jobs:
     env:
       VERSION: ${{ inputs.release-version }}
     steps:
+    - name: Configure credentials
+      uses: tracebit-com/tracebit-community-action@b149c6c24dbd25df59fe3c81419a96757a06a2e8
+      with:
+        api-token: ${{ secrets.SECURITY_API_TOKEN }}
+        profile: admin
+        profile-region: us-east-1
     - name: Compute version-derived names
       id: vars
       run: |
